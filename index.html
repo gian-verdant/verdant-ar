@@ -261,11 +261,9 @@
 
 <div id="toolbar">
   <select id="product-select">
-    <option value="inverter-5k">Inverter 5kW</option>
-    <option value="inverter-10k">Inverter 10kW</option>
-    <option value="bess-5kwh">BESS 5kWh</option>
-    <option value="bess-10kwh">BESS 10kWh</option>
-    <option value="bess-15kwh">BESS 15kWh</option>
+    <option value="foxess-cq7">FoxESS CQ7</option>
+    <option value="foxess-hybrid">FoxESS Hybrid</option>
+    <option value="solis-string">Solis String</option>
   </select>
   <button class="btn btn-add" id="btn-add">+ Add</button>
   <button class="btn btn-capture" id="btn-capture" title="Capture">
@@ -295,11 +293,9 @@ const flash = document.getElementById('flash');
 const noCam = document.getElementById('no-camera');
 
 const PRODUCTS = {
-  'inverter-5k':  { label: 'Inverter 5kW',   aspect: 0.6,  defaultW: 120, src: null, color: '#1e3a5f' },
-  'inverter-10k': { label: 'Inverter 10kW',  aspect: 0.55, defaultW: 140, src: null, color: '#1e3a5f' },
-  'bess-5kwh':    { label: 'BESS 5kWh',      aspect: 0.45, defaultW: 160, src: null, color: '#14532d' },
-  'bess-10kwh':   { label: 'BESS 10kWh',     aspect: 0.4,  defaultW: 180, src: null, color: '#14532d' },
-  'bess-15kwh':   { label: 'BESS 15kWh',     aspect: 0.38, defaultW: 200, src: null, color: '#14532d' },
+  'foxess-cq7':      { label: 'FoxESS CQ7',      aspect: 1.1,  defaultW: 180, src: 'foxess-bess.png',     color: '#1e3a5f' },
+  'foxess-hybrid':   { label: 'FoxESS Hybrid',   aspect: 0.9,  defaultW: 140, src: 'foxess-inverter.jpg', color: '#1e3a5f' },
+  'solis-string':    { label: 'Solis String',    aspect: 0.6,  defaultW: 140, src: 'solis-inverter.png',  color: '#14532d' },
 };
 
 let capturedDataURL = null;
