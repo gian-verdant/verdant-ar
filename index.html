@@ -466,7 +466,20 @@ document.getElementById('btn-capture').addEventListener('click', async () => {
     const ow = rect.width * scale;
     const oh = rect.height * scale;
     const tmp = new Image();
-    tmp.onload = () => { ctx.drawImage(tmp, ox, oy, ow, oh); resolve(); };
+    tmp.onload = () => {
+      const iw = tmp.naturalWidth, ih = tmp.naturalHeight;
+      const elAspect = ow / oh, imgAspect = iw / ih;
+      let dw, dh, dx, dy;
+      if (imgAspect > elAspect) {
+        dw = ow; dh = ow / imgAspect;
+        dx = ox; dy = oy + (oh - dh) / 2;
+      } else {
+        dh = oh; dw = oh * imgAspect;
+        dy = oy; dx = ox + (ow - dw) / 2;
+      }
+      ctx.drawImage(tmp, dx, dy, dw, dh);
+      resolve();
+    };
     tmp.onerror = resolve;
     tmp.src = imgEl.src;
   }));
