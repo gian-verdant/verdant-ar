@@ -444,23 +444,27 @@ document.getElementById('btn-capture').addEventListener('click', async () => {
   flash.classList.add('active');
   setTimeout(() => flash.classList.remove('active'), 200);
 
-  const vw = overlayContainer.offsetWidth;
-  const vh = overlayContainer.offsetHeight;
-  captureCanvas.width = vw;
-  captureCanvas.height = vh;
+  const sw = overlayContainer.offsetWidth;
+  const sh = overlayContainer.offsetHeight;
+  const cw = video.videoWidth || sw;
+  const ch = video.videoHeight || sh;
+  const scale = cw / sw;
+
+  captureCanvas.width = cw;
+  captureCanvas.height = ch;
   const ctx = captureCanvas.getContext('2d');
 
-  ctx.drawImage(video, 0, 0, vw, vh);
+  ctx.drawImage(video, 0, 0, cw, ch);
 
   const overlays = overlayContainer.querySelectorAll('.product-overlay');
   const drawPromises = Array.from(overlays).map(el => new Promise(resolve => {
     const imgEl = el.querySelector('img');
     const rect = el.getBoundingClientRect();
     const containerRect = overlayContainer.getBoundingClientRect();
-    const ox = rect.left - containerRect.left;
-    const oy = rect.top - containerRect.top;
-    const ow = rect.width;
-    const oh = rect.height;
+    const ox = (rect.left - containerRect.left) * scale;
+    const oy = (rect.top - containerRect.top) * scale;
+    const ow = rect.width * scale;
+    const oh = rect.height * scale;
     const tmp = new Image();
     tmp.onload = () => { ctx.drawImage(tmp, ox, oy, ow, oh); resolve(); };
     tmp.onerror = resolve;
@@ -468,7 +472,7 @@ document.getElementById('btn-capture').addEventListener('click', async () => {
   }));
 
   await Promise.all(drawPromises);
-  capturedDataURL = captureCanvas.toDataURL('image/jpeg', 0.92);
+  capturedDataURL = captureCanvas.toDataURL('image/jpeg', 1.0);
   previewImg.src = capturedDataURL;
   previewPanel.classList.add('show');
 });
