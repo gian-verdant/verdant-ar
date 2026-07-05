@@ -294,7 +294,7 @@ const noCam = document.getElementById('no-camera');
 
 const PRODUCTS = {
   'foxess-cq7':      { label: 'FoxESS CQ7',      aspect: 1.1,  defaultW: 180, src: 'foxess-bess.png',     color: '#1e3a5f' },
-  'foxess-hybrid':   { label: 'FoxESS Hybrid',   aspect: 0.9,  defaultW: 140, src: 'foxess-inverter.jpg', color: '#1e3a5f' },
+  'foxess-hybrid':   { label: 'FoxESS Hybrid',   aspect: 0.9,  defaultW: 140, src: 'foxess-inverter.png', color: '#1e3a5f' },
   'solis-string':    { label: 'Solis String',    aspect: 0.6,  defaultW: 140, src: 'solis-inverter.png',  color: '#14532d' },
 };
 
@@ -361,9 +361,10 @@ function addProduct() {
   el.style.cssText = `left:${x}px;top:${y}px;width:${w}px;height:${h}px;`;
 
   const img = document.createElement('img');
-  img.src = p.src || makePlaceholderCanvas(key);
   img.alt = p.label;
   img.draggable = false;
+  img.onerror = () => { img.onerror = null; img.src = makePlaceholderCanvas(key); };
+  img.src = p.src || makePlaceholderCanvas(key);
 
   const resizeHandle = document.createElement('div');
   resizeHandle.className = 'resize-handle';
