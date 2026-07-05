@@ -64,7 +64,8 @@
     object-fit: contain;
     display: block;
     pointer-events: none;
-    filter: drop-shadow(0 4px 16px rgba(0,0,0,0.6));
+    mix-blend-mode: multiply;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.4));
   }
 
   .resize-handle {
@@ -462,7 +463,12 @@ document.getElementById('btn-capture').addEventListener('click', async () => {
     const ow = rect.width;
     const oh = rect.height;
     const tmp = new Image();
-    tmp.onload = () => { ctx.drawImage(tmp, ox, oy, ow, oh); resolve(); };
+    tmp.onload = () => {
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.drawImage(tmp, ox, oy, ow, oh);
+      ctx.globalCompositeOperation = 'source-over';
+      resolve();
+    };
     tmp.onerror = resolve;
     tmp.src = imgEl.src;
   }));
